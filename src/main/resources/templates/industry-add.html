@@ -18,14 +18,14 @@
 
   <h1> Are you about to add a new Industry? </h1>
   <br>
-  <div sec:authorize="isAuthenticated()">Authenticated as <span sec:authentication="name"></span></div>
+<!--  <div sec:authorize="isAuthenticated()">Authenticated as <span sec:authentication="name"></span></div>-->
   <br><br>
   <form action="#" th:action="@{/industry/add}" th:object="${industry}" method="post">
     <!--     связали форму с объектом industry-->
     <br>
     <input type="text" name="name" placeholder="Input industry" class="form-control" th:field="*{industry.name}" required><br>
 
-    <button type="submit" class="btn btn-primary"> Add</button>
+    <button type="submit" class="btn btn-primary"> Save </button>
     <a th:href="@{/industry}" class="btn btn-secondary"> Back </a>
   </form>
 </div>
