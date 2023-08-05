@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql
+    container_name: my-mysql
+    command: --default-authentication-plugin=mysql_native_password   # Добавляем эту строку для предотвращения проблемы с аутентификацией
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: competa_db
+    ports:
+      - "8889:3306"
+    volumes:
+      - ./db:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: my-phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1   # Добавляем эту строку, чтобы изменить порт PMA на случайный доступный
+    ports:
+      - "8081:80"   # Исправляем порт на 8081, чтобы не конфликтовать с портом 8080 из предыдущего примера
+
+volumes:
+  mysql_data:
