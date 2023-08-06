@@ -1,9 +1,11 @@
 package com.competa.competademo.dto;
 
+import com.competa.competademo.entity.Competa;
 import com.competa.competademo.entity.Industry;
-import com.competa.competademo.entity.User;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
+
+import java.util.Optional;
 
 import static com.competa.competademo.dto.UserDtoHelper.parseUserName;
 
@@ -13,14 +15,30 @@ import static com.competa.competademo.dto.UserDtoHelper.parseUserName;
 @AllArgsConstructor
 @Builder
 public class IndustryDto {
-    protected Long id;
+    private Long id;
     @NotEmpty
-    protected String name;
+    private String name;
 
     public IndustryDto(Industry industry) {
         this.id = industry.getId();
         this.name = industry.getName();
     }
+
+//    public CompetaDto(Competa competa) {
+//        this.id = competa.getId();
+//        this.competaType = competa.getCompetaType();
+//        this.title = competa.getTitle();
+//        this.description = competa.getDescription();
+//        this.status = competa.isStatus();
+//        this.views = competa.getViews();
+//        this.dateOut = competa.getDateOut();
+//        this.timeOut = competa.getTimeOut();
+//    }
+
+
+
+
+
 
     public com.competa.competademo.entity.Industry toEntity() {
         return com.competa.competademo.entity.Industry.builder()

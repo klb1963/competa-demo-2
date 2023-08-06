@@ -5,19 +5,20 @@ import com.competa.competademo.entity.Industry;
 import jakarta.transaction.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface IndustryService {
+public interface IndustryService<R> {
 
     @Transactional
     void saveIndustry(IndustryDto industry);
 
-    Industry removeIndustry(String industry);
+    Industry removeIndustry(long industryId);
 
     boolean isIndustryByNameExist(String industry);
 
-    Industry findById(long id);
+    Optional<R> findById (final long industryId);
 
-    List<IndustryDto> findAllIndustries();
+    List<R> findAllById();
 
     Industry saveIndustry(Industry industry);
 
