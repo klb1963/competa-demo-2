@@ -53,11 +53,19 @@
         <input type="date" name="dateOut" class="form-control" id="dateOutAdd" placeholder="DateOut"
                th:field="*{dateOut}" required><br>
 
-        <select class="form-select" name = "industry" >
-            <option selected>Input industry</option>
-            <option industry> Education </option>
-            <option industry> IT </option>
+<!--TODO после реализации контроллера нужно здесь доделать -->
+<!--        Пример кода -->
+<!--        <div class="form-group blu-margin">-->
+<!--            <select class="form-control" th:field="${operator.opeId}"  id="dropOperator">-->
+<!--                <option value="0">select operator</option>-->
+<!--                <option th:each="operator : ${operators}" th:value="${operator.id}" th:text="${operator.operatorName}"></option>-->
+<!--            </select>-->
+<!--        </div>-->
+        <select class="form-control" id="dropDownList">
+            <option value="0">select option</option>
+            <option th:each="option : ${options}" th:value="${option}" th:text="${option}"></option>
         </select>
+
         <br>
 
         <div class="form-check">

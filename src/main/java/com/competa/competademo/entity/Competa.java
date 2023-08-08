@@ -29,6 +29,9 @@ public class Competa {
 
     private boolean status;
 
+    @ManyToOne
+    private Industry industry; // индустрия
+
     private int views;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -61,6 +64,7 @@ public class Competa {
         sb.append(", competaType='").append(competaType).append('\'');
         sb.append(", title='").append(title).append('\'');
         sb.append(", description='").append(description).append('\'');
+        sb.append(", industry='").append(industry).append('\'');
         sb.append(", status=").append(status);
         sb.append(", views=").append(views);
         sb.append(", dateOut=").append(dateOut);

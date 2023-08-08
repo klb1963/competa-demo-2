@@ -24,22 +24,6 @@ public class IndustryDto {
         this.name = industry.getName();
     }
 
-//    public CompetaDto(Competa competa) {
-//        this.id = competa.getId();
-//        this.competaType = competa.getCompetaType();
-//        this.title = competa.getTitle();
-//        this.description = competa.getDescription();
-//        this.status = competa.isStatus();
-//        this.views = competa.getViews();
-//        this.dateOut = competa.getDateOut();
-//        this.timeOut = competa.getTimeOut();
-//    }
-
-
-
-
-
-
     public com.competa.competademo.entity.Industry toEntity() {
         return com.competa.competademo.entity.Industry.builder()
                 .id(this.id)
