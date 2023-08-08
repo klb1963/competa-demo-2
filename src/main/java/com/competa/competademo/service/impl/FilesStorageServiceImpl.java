@@ -1,5 +1,7 @@
 package com.competa.competademo.service.impl;
 
+import com.competa.competademo.entity.ImageInfo;
+import com.competa.competademo.repository.ImageInfoRepository;
 import com.competa.competademo.service.FilesStorageService;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -18,6 +20,11 @@ import java.util.stream.Stream;
 public class FilesStorageServiceImpl implements FilesStorageService {
 
     private final Path root = Paths.get("./uploads");
+    private final ImageInfoRepository imageInfoRepository;
+
+    public FilesStorageServiceImpl(ImageInfoRepository imageInfoRepository) {
+        this.imageInfoRepository = imageInfoRepository;
+    }
 
     @Override
     public void init() {
@@ -38,6 +45,13 @@ public class FilesStorageServiceImpl implements FilesStorageService {
             }
             throw new RuntimeException(e.getMessage());
         }
+
+       final ImageInfo entityToSave = ImageInfo.builder()
+                .url(path.toString())
+                .name(file.getOriginalFilename())
+                .build();
+
+       return imageInfoRepository.save(entityToSave);
     }
 
     @Override

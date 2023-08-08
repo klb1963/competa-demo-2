@@ -32,6 +32,8 @@ public class CompetaPagesController {
         return "competa-main"; // вызывается шаблон
     }
 
+
+
     @GetMapping("/competa/add")  // переход на страницу
     public String competaAdd(Model model) {
         model.addAttribute(COMPETA_VIEW_VARIABLE, new CompetaDto());// через model связали шаблон с классом Competa

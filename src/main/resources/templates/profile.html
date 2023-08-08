@@ -30,6 +30,16 @@
     <div class="row">
         <div class="col-md-6">
             <h4 class="mb-3"> User profile picture </h4>
+            <style>
+                .round {
+                    border-radius: 100px; /* Радиус скругления */
+                }
+            </style>
+            <img th:src="'data:image/png;base64,' + ${user.avatar}" width = "200" class = "round">
+            <br>
+            <br>
+
+<!--            <form method="post" role="form" th:action="@{/register/save}" th:object="${user}">-->
             <form
                     id="uploadForm"
                     method="post"

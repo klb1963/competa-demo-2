@@ -33,6 +33,10 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
+    @ManyToOne
+    @JoinColumn(name = "avatar_id")
+    private ImageInfo profileAvatar;
+
     @ManyToMany
     @Fetch(FetchMode.JOIN)
     private Set<Role> roles = new HashSet<>();

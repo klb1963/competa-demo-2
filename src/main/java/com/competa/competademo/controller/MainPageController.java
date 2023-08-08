@@ -54,6 +54,6 @@ public class MainPageController {
             message = "Could not upload the image: " + file.getOriginalFilename() + ". Error: " + e.getMessage();
             model.addAttribute("message", message);
         }
-        return "profile";
+    return "redirect:/user";
     }
 }

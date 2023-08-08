@@ -52,6 +52,14 @@
         <!--            input data-->
         <input type="date" name="dateOut" class="form-control" id="dateOutAdd" placeholder="DateOut"
                th:field="*{dateOut}" required><br>
+
+        <select class="form-select" name = "industry" >
+            <option selected>Input industry</option>
+            <option industry> Education </option>
+            <option industry> IT </option>
+        </select>
+        <br>
+
         <div class="form-check">
             <input class="form-check-input" name="status" type="checkbox" value="true" id="defaultCheck1"
                    th:field="*{status}">
