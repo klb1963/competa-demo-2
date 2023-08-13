@@ -39,7 +39,7 @@ public class SpringSecurity {
                                 .requestMatchers("/register/**").permitAll()
                                 .requestMatchers("/competa/**").hasRole("USER")
                                 .requestMatchers("/industry/**").hasRole("USER")
-                                .requestMatchers("/images/**").hasRole("USER")
+                                .requestMatchers("/images/**").permitAll()
                                 //.requestMatchers("/upload_form").hasRole("USER")
                                 .requestMatchers("/user").hasRole("USER")
                                 .requestMatchers("/users").hasRole("ADMIN")

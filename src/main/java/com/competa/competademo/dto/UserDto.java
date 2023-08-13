@@ -23,12 +23,19 @@ public class UserDto {
     @Email
     protected String email;
 
+    protected String avatar;
+
     public UserDto(final User user) {
         this.id = user.getId();
         this.email = user.getEmail();
         final UserNameModel userNameModel = parseUserName(user);
         this.firstName = userNameModel.firstName();
         this.lastName = userNameModel.lastName();
+    }
+
+    public UserDto(User authUser, String avatarData) {
+        this(authUser);
+        this.avatar = avatarData;
     }
 
     public User toEntity() {

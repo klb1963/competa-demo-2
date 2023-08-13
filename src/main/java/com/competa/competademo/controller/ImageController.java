@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class ImageController {
 
     @Autowired
-    FilesStorageService storageService;
+    private FilesStorageService storageService;
 
     @GetMapping("/images")
     public String imagesPage() {

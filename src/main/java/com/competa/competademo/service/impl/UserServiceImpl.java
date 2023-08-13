@@ -2,6 +2,7 @@ package com.competa.competademo.service.impl;
 
 import com.competa.competademo.dto.CreateUserDto;
 import com.competa.competademo.dto.UserDto;
+import com.competa.competademo.entity.ImageInfo;
 import com.competa.competademo.entity.Role;
 import com.competa.competademo.entity.User;
 import com.competa.competademo.exceptions.UserAlreadyExistsException;
@@ -11,11 +12,16 @@ import com.competa.competademo.service.RoleService;
 import com.competa.competademo.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.NonNull;
+import org.springframework.core.io.UrlResource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Base64Utils;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Set;
 
@@ -114,5 +120,27 @@ public class UserServiceImpl implements UserService {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); // вызов контекста
         final String authUserEmail = authentication.getName(); // получение имени текущего пользователя
         return findByEmail(authUserEmail);
+    }
+
+    @Transactional
+    @Override
+    public void addAvatar(ImageInfo avatar){
+       User user = getAuthUser();
+       user.setProfileAvatar(avatar);
+       userRepository.save(user);
+    }
+
+   public String getAvatar(User user){
+       final var filePath = Path.of(user.getProfileAvatar().getUrl());
+       try {
+           final UrlResource resource = new UrlResource(filePath.toUri());
+           if (resource.exists() && resource.isReadable()) {
+            byte[] imageBytes = Files.readAllBytes(filePath);
+            return Base64Utils.encodeToString(imageBytes);
+       }
+       } catch (final IOException e) {
+           throw new RuntimeException("Error reading the avatar");
+       }
+           return "";
     }
 }

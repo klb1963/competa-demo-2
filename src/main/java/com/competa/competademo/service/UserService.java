@@ -2,6 +2,7 @@ package com.competa.competademo.service;
 
 import com.competa.competademo.dto.CreateUserDto;
 import com.competa.competademo.dto.UserDto;
+import com.competa.competademo.entity.ImageInfo;
 import com.competa.competademo.entity.User;
 
 import java.util.List;
@@ -27,4 +28,8 @@ public interface UserService {
     User findByEmail(String userEmail);
 
     User getAuthUser();
+
+    void addAvatar(ImageInfo avatar);
+
+    String getAvatar(User user);
 }

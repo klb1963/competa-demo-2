@@ -2,6 +2,7 @@ package com.competa.competademo.controller;
 
 import com.competa.competademo.dto.CompetaDto;
 import com.competa.competademo.dto.UserDto;
+import com.competa.competademo.entity.ImageInfo;
 import com.competa.competademo.entity.User;
 import com.competa.competademo.service.CompetaService;
 import com.competa.competademo.service.FilesStorageService;
@@ -37,8 +38,9 @@ public class MainPageController {
     @GetMapping("/user")
     public String profile(Model model) {
         final User authUser = userService.getAuthUser();
+        String avatarData = userService.getAvatar(authUser);
         model.addAttribute("title", "My profile");
-        model.addAttribute("user", new UserDto(authUser));
+        model.addAttribute("user", new UserDto(authUser, avatarData));
         model.addAttribute("competas", competaService.countByAuthUser());
         return "profile";
     }
@@ -47,7 +49,8 @@ public class MainPageController {
     public String uploadImage(Model model, @RequestParam("file") MultipartFile file) {
         String message = "";
         try {
-            storageService.save(file);
+            ImageInfo avatar = storageService.save(file);
+            userService.addAvatar(avatar);
             message = "Uploaded the image successfully: " + file.getOriginalFilename();
             model.addAttribute("message", message);
         } catch (Exception e) {
