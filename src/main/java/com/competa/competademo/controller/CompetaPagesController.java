@@ -2,8 +2,8 @@ package com.competa.competademo.controller;
 
 import com.competa.competademo.dto.CompetaDto;
 import com.competa.competademo.dto.IndustryDto;
-import com.competa.competademo.entity.Industry;
 import com.competa.competademo.service.CompetaService;
+import com.competa.competademo.service.IndustryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,11 +18,14 @@ public class CompetaPagesController {
     private static final String COMPETA_VIEW_VARIABLE = "competa";
     private static final String REDIRECT_COMPETA = "redirect:/competa";
 
-    private final CompetaService<CompetaDto> competaService;
+    private final CompetaService<CompetaDto> competaService; // добавил сервис связи с БД
+
+    private final IndustryService industryService; // добавил сервис связи с БД
 
 
-    public CompetaPagesController(CompetaService<CompetaDto> competaService) {
+    public CompetaPagesController(CompetaService<CompetaDto> competaService, IndustryService industryService) {
         this.competaService = competaService;
+        this.industryService = industryService;
     }
 
     @GetMapping("/competa")
@@ -32,34 +35,17 @@ public class CompetaPagesController {
         return "competa-main"; // вызывается шаблон
     }
 
-    @RequestMapping(value = "/populateIndustryList", method = RequestMethod.GET)
-    public String populateIndustryList(Model model) {
-        // берем список индустрий из IndustryService
-        List<IndustryDto> industryList = new ArrayList<>();
-        model.addAttribute("industries", industryList);
-        return "industryList/industryList.html";
-    }
-
     @GetMapping("/competa/add")  // переход на страницу
     public String competaAdd(Model model) {
-        //TODO - как сюда вытащить список индустрий?
-        //Пример кода
-//        List<Operator> operators =  operatorService.getAllOperaors()
-//        model.addAttribute("operators", operators);
-
-        List<String> options = new ArrayList<String>();
-        options.add("option 1");
-        options.add("option 2");
-        options.add("option 3");
-        model.addAttribute("options", options);
-        model.addAttribute(COMPETA_VIEW_VARIABLE, new CompetaDto());// через model связали шаблон с классом Competa
-
-//        model.addAttribute("industries", industryList);
+        final List<IndustryDto> industryDtoList = industryService.findAllById(); // взял список индустрий
+        model.addAttribute("industries", industryDtoList); // передал в модель
+        model.addAttribute(COMPETA_VIEW_VARIABLE, new CompetaDto());// через model связал шаблон с классом Competa
         return "competa-add";  // вызывается шаблон
     }
 
     @PostMapping("/competa/add")
     public String competaAdd(@ModelAttribute CompetaDto competa, Model model) {
+        final List<IndustryDto> industryDtoList = industryService.findAllById(); // взял список индустрий
         model.addAttribute(COMPETA_VIEW_VARIABLE, new CompetaDto());
         competaService.addToAuthUser(competa);
         return REDIRECT_COMPETA; // переход на страницу redirect:/competa"

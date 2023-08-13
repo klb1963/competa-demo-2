@@ -23,7 +23,7 @@ public class CompetaDto {
     private String title;
     @Getter
     private String description;
-    private Industry industry; // добавил индустрию
+    private Long selectedIndustryId; // добавил индустрию
     private boolean status;
     private int views;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -32,24 +32,24 @@ public class CompetaDto {
     private String timeOut;
 
     public CompetaDto(Competa competa) {
-        this.id = id;
-        this.competaType = competaType;
-        this.title = title;
-        this.description = description;
-        this.industry = industry; // добавил индустрию
-        this.status = status;
-        this.views = views;
-        this.dateOut = dateOut;
-        this.timeOut = timeOut;
+        this.id = competa.getId();
+        this.competaType = competa.getCompetaType();
+        this.title = competa.getTitle();
+        this.description = competa.getDescription();
+        this.selectedIndustryId = competa.getIndustry().getId(); // добавил индустрию
+        this.status = competa.isStatus();
+        this.views = competa.getViews();
+        this.dateOut = competa.getDateOut();
+        this.timeOut = competa.getTimeOut();
     }
 
-    public com.competa.competademo.entity.Competa toEntity() {
+    public com.competa.competademo.entity.Competa toEntity(Industry industry) {
         return com.competa.competademo.entity.Competa.builder()
                 .id(this.id)
                 .competaType(this.competaType)
                 .title(this.title)
                 .description(this.description)
-                .industry(this.industry) // добавил индустрию
+                .industry(industry) // добавил индустрию
                 .status(this.status)
                 .views(this.views)
                 .dateOut(this.dateOut)

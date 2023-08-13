@@ -1,11 +1,13 @@
 package com.competa.competademo.service.impl;
 
 import com.competa.competademo.dto.CompetaDto;
+import com.competa.competademo.dto.IndustryDto;
 import com.competa.competademo.entity.Competa;
 import com.competa.competademo.entity.User;
 import com.competa.competademo.exceptions.CompetaNotFoundException;
 import com.competa.competademo.repository.CompetaRepository;
 import com.competa.competademo.service.CompetaService;
+import com.competa.competademo.service.IndustryService;
 import com.competa.competademo.service.UserService;
 import org.springframework.stereotype.Service;
 
@@ -22,18 +24,21 @@ public class CompetaServiceImpl implements CompetaService<CompetaDto> {
 
     private final CompetaRepository competaRepository;
     private final UserService userService;
+    private final IndustryService<IndustryDto> industryService;
 
     public CompetaServiceImpl(CompetaRepository competaRepository,
-                              UserService userService) {
+                              UserService userService, IndustryService<IndustryDto> industryService) {
         this.competaRepository = competaRepository;
         this.userService = userService;
+        this.industryService = industryService;
     }
 
     @Override
     public void addToAuthUser(CompetaDto competa) {
         final User authUser = userService.getAuthUser();
+        IndustryDto industryDto = industryService.findById(competa.getSelectedIndustryId()).orElseThrow(() -> new RuntimeException("Competa not found"));
 
-        Competa entity = competa.toEntity();
+        Competa entity = competa.toEntity(industryDto.toEntity());
         entity.setUser(authUser);
         entity = competaRepository.save(entity);
 

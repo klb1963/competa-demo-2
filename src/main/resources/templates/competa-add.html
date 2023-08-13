@@ -20,54 +20,51 @@
     <br>
     <div sec:authorize="isAuthenticated()">Authenticated as <span sec:authentication="name"></span></div>
     <br><br>
+
     <form action="#" th:action="@{/competa/add}" th:object="${competa}" method="post">
         <!--     связали форму с объектом competa-->
+
+        <!--   поле выбора типа компеты  -->
         <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="competaType" id="inlineRadio1" value="Education"
                    th:field="*{competaType}" required>
             <label class="form-check-label" for="inlineRadio1">Education</label>
         </div>
-
         <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="competaType" id="inlineRadio2" value="Job"
                    th:field="*{competaType}" required>
             <label class="form-check-label" for="inlineRadio2">Job</label>
         </div>
-
         <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="competaType" id="inlineRadio3" value="Hard skill"
                    th:field="*{competaType}" required>
             <label class="form-check-label" for="inlineRadio3">Hard skill</label>
         </div>
-
         <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="competaType" id="inlineRadio4" value="Soft skill"
                    th:field="*{competaType}" required>
             <label class="form-check-label" for="inlineRadio3">Soft skill</label>
         </div>
         <br><br>
+        <!--   поле выбора title  -->
         <input type="text" name="title" placeholder="Input title" class="form-control" th:field="*{title}" required><br>
+
+        <!--   поле выбора description  -->
         <input type="text" name="description" placeholder="Input description" class="form-control"
                th:field="*{description}"><br>
-        <!--            input data-->
+
+        <!--   поле выбора даты -->
         <input type="date" name="dateOut" class="form-control" id="dateOutAdd" placeholder="DateOut"
                th:field="*{dateOut}" required><br>
 
-<!--TODO после реализации контроллера нужно здесь доделать -->
-<!--        Пример кода -->
-<!--        <div class="form-group blu-margin">-->
-<!--            <select class="form-control" th:field="${operator.opeId}"  id="dropOperator">-->
-<!--                <option value="0">select operator</option>-->
-<!--                <option th:each="operator : ${operators}" th:value="${operator.id}" th:text="${operator.operatorName}"></option>-->
-<!--            </select>-->
-<!--        </div>-->
-        <select class="form-control" id="dropDownList">
-            <option value="0">select option</option>
-            <option th:each="option : ${options}" th:value="${option}" th:text="${option}"></option>
+        <!-- поле выбора индустрии из выпадающего списка -->
+        <select class="form-control" th:field="*{selectedIndustryId}" id="dropDownList">
+            <option value="0"> select industry </option>
+            <option th:each="el:${industries}" th:value="${el.id}" th:text="${el.name}" ></option>
         </select>
 
         <br>
-
+        <!-- поле выбора статуса  -->
         <div class="form-check">
             <input class="form-check-input" name="status" type="checkbox" value="true" id="defaultCheck1"
                    th:field="*{status}">
@@ -75,9 +72,7 @@
                 Public
             </label>
         </div>
-        <!--        скрытое поле для передачи user_name -->
-        <!--        <input  type="hidden" name="user_name" th:field="*{userName}"/>-->
-        <!--        скрытое поле для передачи user_name -->
+
         <br> <br>
         <button type="submit" class="btn btn-primary"> Add</button>
         <a th:href="@{/competa}" class="btn btn-secondary"> Back </a>
