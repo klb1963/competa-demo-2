@@ -1,14 +1,15 @@
 package com.competa.competademo.controller;
 
 import com.competa.competademo.dto.CompetaDto;
+import com.competa.competademo.dto.CtypeDto;
 import com.competa.competademo.dto.IndustryDto;
 import com.competa.competademo.service.CompetaService;
+import com.competa.competademo.service.CtypeService;
 import com.competa.competademo.service.IndustryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,10 +23,13 @@ public class CompetaPagesController {
 
     private final IndustryService industryService; // добавил сервис связи с БД
 
+    private final CtypeService ctypeService; // добавил сервис связи с БД
 
-    public CompetaPagesController(CompetaService<CompetaDto> competaService, IndustryService industryService) {
+
+    public CompetaPagesController(CompetaService<CompetaDto> competaService, IndustryService industryService, CtypeService ctypeService) {
         this.competaService = competaService;
         this.industryService = industryService;
+        this.ctypeService = ctypeService;
     }
 
     @GetMapping("/competa")
@@ -39,6 +43,8 @@ public class CompetaPagesController {
     public String competaAdd(Model model) {
         final List<IndustryDto> industryDtoList = industryService.findAllById(); // взял список индустрий
         model.addAttribute("industries", industryDtoList); // передал в модель
+        final List<CtypeDto> ctypeDtoList = ctypeService.findAllById(); // взял список типов компет
+        model.addAttribute("ctypes", ctypeDtoList); // передал в модель
         model.addAttribute(COMPETA_VIEW_VARIABLE, new CompetaDto());// через model связал шаблон с классом Competa
         return "competa-add";  // вызывается шаблон
     }
@@ -46,6 +52,7 @@ public class CompetaPagesController {
     @PostMapping("/competa/add")
     public String competaAdd(@ModelAttribute CompetaDto competa, Model model) {
         final List<IndustryDto> industryDtoList = industryService.findAllById(); // взял список индустрий
+        final List<CtypeDto> ctypeDtoList = ctypeService.findAllById(); // взял список типов компет
         model.addAttribute(COMPETA_VIEW_VARIABLE, new CompetaDto());
         competaService.addToAuthUser(competa);
         return REDIRECT_COMPETA; // переход на страницу redirect:/competa"
@@ -66,6 +73,10 @@ public class CompetaPagesController {
     public String competaEdit(@PathVariable(value = "id") long id, Model model) {
         final Optional<CompetaDto> competa = competaService.findById(id); // взяли "футляр"
         if (competa.isPresent()) {  // если внутри "футляра" есть результат
+            final List<IndustryDto> industryDtoList = industryService.findAllById(); // взял список индустрий
+            model.addAttribute("industries", industryDtoList); // передал в модель
+            final List<CtypeDto> ctypeDtoList = ctypeService.findAllById(); // взял список типов компет
+            model.addAttribute("ctypes", ctypeDtoList);
             model.addAttribute(COMPETA_VIEW_VARIABLE, competa.get()); // взяли в model
             return "competa-edit";
         } else {

@@ -19,11 +19,13 @@ import java.util.Date;
 public class CompetaDto {
 
     private Long id;
-    private String competaType;
+    private String ctype;
     private String title;
+    private Long selectedIndustryId; // добавил индустрию
+
     @Getter
     private String description;
-    private Long selectedIndustryId; // добавил индустрию
+
     private boolean status;
     private int views;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -33,7 +35,7 @@ public class CompetaDto {
 
     public CompetaDto(Competa competa) {
         this.id = competa.getId();
-        this.competaType = competa.getCompetaType();
+        this.ctype = competa.getCtype().getName();
         this.title = competa.getTitle();
         this.description = competa.getDescription();
         this.selectedIndustryId = competa.getIndustry().getId(); // добавил индустрию
@@ -43,13 +45,15 @@ public class CompetaDto {
         this.timeOut = competa.getTimeOut();
     }
 
-    public com.competa.competademo.entity.Competa toEntity(Industry industry) {
+    public com.competa.competademo.entity.Competa toEntity() {
         return com.competa.competademo.entity.Competa.builder()
                 .id(this.id)
-                .competaType(this.competaType)
+                // TODO - как добавить тип компеты для сохранения в БД
+                // .ctype(this.ctype)
                 .title(this.title)
                 .description(this.description)
-                .industry(industry) // добавил индустрию
+                // TODO - как добавить индустрию для сохранения в БД
+                //.industry(this.selectedIndustryId) // добавил индустрию
                 .status(this.status)
                 .views(this.views)
                 .dateOut(this.dateOut)

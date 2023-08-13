@@ -44,6 +44,7 @@ public class IndustryController {
         industryService.saveIndustry(industry);
         return REDIRECT_INDUSTRY; // переход на страницу redirect:/industry
     }
+
     @GetMapping("/industry/{id}")  // переход на страницу
     public String industryDetails(@PathVariable(value = "id") long id, Model model) {
        final Optional<IndustryDto> industry = industryService.findById(id);
@@ -54,6 +55,7 @@ public class IndustryController {
            return REDIRECT_INDUSTRY;
        }
     }
+
     @GetMapping("/industry/{id}/edit")
     public String industryEdit(@PathVariable(value = "id") long id, Model model) {
         final Optional<IndustryDto> industry = industryService.findById(id);// взяли "футляр"
@@ -64,11 +66,6 @@ public class IndustryController {
             return REDIRECT_INDUSTRY;
         }
     }
-
-
-
-
-
 
 
     @PostMapping("/industry/{id}/edit") //

@@ -21,7 +21,6 @@ import java.util.Optional;
 @Service("CompetaService")
 public class CompetaServiceImpl implements CompetaService<CompetaDto> {
 
-
     private final CompetaRepository competaRepository;
     private final UserService userService;
     private final IndustryService<IndustryDto> industryService;
@@ -38,7 +37,7 @@ public class CompetaServiceImpl implements CompetaService<CompetaDto> {
         final User authUser = userService.getAuthUser();
         IndustryDto industryDto = industryService.findById(competa.getSelectedIndustryId()).orElseThrow(() -> new RuntimeException("Competa not found"));
 
-        Competa entity = competa.toEntity(industryDto.toEntity());
+        Competa entity = competa.toEntity();
         entity.setUser(authUser);
         entity = competaRepository.save(entity);
 
@@ -53,6 +52,8 @@ public class CompetaServiceImpl implements CompetaService<CompetaDto> {
         competaToEdit.setDescription(competa.getDescription());
         competaToEdit.setDateOut(competa.getDateOut());
         competaToEdit.setStatus(competa.isStatus());
+        // TODO - как получить industryId
+    //    competaToEdit.setIndustry(competa.getSelectedIndustryId());
         competaRepository.save(competaToEdit);
     }
 

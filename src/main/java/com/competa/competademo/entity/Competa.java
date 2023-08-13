@@ -21,7 +21,9 @@ public class Competa {
 
     private Long id; // идентификатор
 
-    private String competaType; // тип = edCompeta, jobCompeta, hsCompeta, ssCompeta
+    // private String competaType;
+    @ManyToOne
+    private Ctype ctype; // тип = edCompeta, jobCompeta, hsCompeta, ssCompeta
 
     private String title;
 
@@ -61,7 +63,7 @@ public class Competa {
     public String toString() {
         final StringBuilder sb = new StringBuilder("Competa{");
         sb.append("id=").append(id);
-        sb.append(", competaType='").append(competaType).append('\'');
+        sb.append(", competaType='").append(ctype).append('\'');
         sb.append(", title='").append(title).append('\'');
         sb.append(", description='").append(description).append('\'');
         sb.append(", industry='").append(industry).append('\'');

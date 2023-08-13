@@ -58,6 +58,13 @@
                placeholder="Input description" class="form-control"><br>
         <input type="date" th:value="${competa.dateOut}" th:field="*{dateOut}" name="dateOut" class="form-control"
                id="dateOutAdd" placeholder="Date of completion"><br>
+
+        <!-- поле выбора индустрии из выпадающего списка -->
+        <select class="form-control" th:field="*{selectedIndustryId}" id="dropDownList">
+            <option value="0"> select industry </option>
+            <option th:each="el:${industries}" th:value="${el.id}" th:text="${el.name}" ></option>
+        </select><br>
+
         <div class="form-check">
             <input class="form-check-input" th:checked="${competa.status}" th:field="*{status}" name="status"
                    type="checkbox" id="defaultCheck1">

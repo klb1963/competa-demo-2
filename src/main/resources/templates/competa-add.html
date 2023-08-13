@@ -26,23 +26,24 @@
 
         <!--   поле выбора типа компеты  -->
         <div class="form-check form-check-inline">
+<!--            <option th:each="el:${industries}" th:value="${el.id}" th:text="${el.name}" ></option>-->
             <input class="form-check-input" type="radio" name="competaType" id="inlineRadio1" value="Education"
-                   th:field="*{competaType}" required>
+                   th:field="*{ctype}" required>
             <label class="form-check-label" for="inlineRadio1">Education</label>
         </div>
         <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="competaType" id="inlineRadio2" value="Job"
-                   th:field="*{competaType}" required>
+                   th:field="*{ctype}" required>
             <label class="form-check-label" for="inlineRadio2">Job</label>
         </div>
         <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="competaType" id="inlineRadio3" value="Hard skill"
-                   th:field="*{competaType}" required>
+                   th:field="*{ctype}" required>
             <label class="form-check-label" for="inlineRadio3">Hard skill</label>
         </div>
         <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="competaType" id="inlineRadio4" value="Soft skill"
-                   th:field="*{competaType}" required>
+                   th:field="*{ctype}" required>
             <label class="form-check-label" for="inlineRadio3">Soft skill</label>
         </div>
         <br><br>

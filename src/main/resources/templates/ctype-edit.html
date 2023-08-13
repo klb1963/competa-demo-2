@@ -1,10 +1,11 @@
 <!DOCTYPE HTML>
 <!--Подключаем шаблонизатор-->
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
 >
 <head>
-    <title>My Competas</title>
+    <title> Industry edit </title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -19,21 +20,24 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-<div th:insert="blocks/header.html :: header"></div>
+<header th:insert="blocks/header.html :: header"></header>
 
 <div class="container mt-5 mb-5">
-    <h1> My Competa </h1>
-    <div th:each="el:${competas}" class="alert alert-info mt-2">
-        <h4 th:text="${el.ctype}"/>
-        <h2 th:text="${el.title}"/>
-        <p th:text="${el.description}"/>
-        <br><br>
-        <p><b>Date of completion:</b> <span th:text="${#dates.format(el.dateOut, 'dd-MM-yyyy')}"/></p>
-        <p><b>Status:</b> <span th:text="${el.status}"/></p>
-        <a th:href="'/competa/' + ${el.id}" class="btn btn-primary"> Details </a>
-    </div>
-</div>
+    <h1>Edit Type of Competa</h1>
+    <br>
+    <div sec:authorize="isAuthenticated()">Authenticated as <span sec:authentication="name"></span></div>
+    <br>
 
+    <!--    <form action="#" th:action="@{/competa/add}" method="post" th:object="${competa}"> // связали форму с объектом competa-->
+    <form action="#" th:action="@{/ctype/{id}/edit(id=${ctype.id})}" th:object="${ctype}" method="post">
+        <br><br>
+        <input type="text" th:value="${ctype.name}" th:field="*{name}" name="type" placeholder="Input competa type"
+               class="form-control"><br>
+        <br>
+        <button type="submit" class="btn btn-success"> Save </button>
+        <a th:href="@{/ctype}" class="btn btn-secondary"> Back </a>
+    </form>
+</div>
 <div th:insert="blocks/footer.html :: footer"></div>
 </body>
 </html>
