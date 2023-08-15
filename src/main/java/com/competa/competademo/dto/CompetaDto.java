@@ -1,6 +1,7 @@
 package com.competa.competademo.dto;
 
 import com.competa.competademo.entity.Competa;
+import com.competa.competademo.entity.Ctype;
 import com.competa.competademo.entity.Industry;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,7 +20,8 @@ import java.util.Date;
 public class CompetaDto {
 
     private Long id;
-    private String ctype;
+    private Long ctypeId;
+    private String ctypeName;
     private String title;
     private Long selectedIndustryId; // добавил индустрию
 
@@ -33,9 +35,12 @@ public class CompetaDto {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private String timeOut;
 
+    // конвертация из Dto в Entity
+    // конструктор
     public CompetaDto(Competa competa) {
         this.id = competa.getId();
-        this.ctype = competa.getCtype().getName();
+        this.ctypeId = competa.getCtype().getId(); // добавил ID типа компеты
+        this.ctypeName = competa.getCtype().getName(); // добавил Имя типа компеты
         this.title = competa.getTitle();
         this.description = competa.getDescription();
         this.selectedIndustryId = competa.getIndustry().getId(); // добавил индустрию
@@ -45,15 +50,13 @@ public class CompetaDto {
         this.timeOut = competa.getTimeOut();
     }
 
-    public com.competa.competademo.entity.Competa toEntity() {
+    public com.competa.competademo.entity.Competa toEntity(Industry industry, Ctype ctype) {
         return com.competa.competademo.entity.Competa.builder()
                 .id(this.id)
-                // TODO - как добавить тип компеты для сохранения в БД
-                // .ctype(this.ctype)
+                .ctype(ctype) // добавил тип компеты
                 .title(this.title)
                 .description(this.description)
-                // TODO - как добавить индустрию для сохранения в БД
-                //.industry(this.selectedIndustryId) // добавил индустрию
+                .industry(industry) // добавил индустрию
                 .status(this.status)
                 .views(this.views)
                 .dateOut(this.dateOut)

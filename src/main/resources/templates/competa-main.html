@@ -24,7 +24,7 @@
 <div class="container mt-5 mb-5">
     <h1> My Competa </h1>
     <div th:each="el:${competas}" class="alert alert-info mt-2">
-        <h4 th:text="${el.ctype}"/>
+        <h4 th:text="${el.ctypeName}"/>
         <h2 th:text="${el.title}"/>
         <p th:text="${el.description}"/>
         <br><br>

@@ -86,6 +86,8 @@ public class CompetaPagesController {
 
     @PostMapping("/competa/{id}/edit") //
     public String competaUpdate(@PathVariable(value = "id") long id, @ModelAttribute CompetaDto competa) {
+        final List<IndustryDto> industryDtoList = industryService.findAllById(); // взял список индустрий
+        final List<CtypeDto> ctypeDtoList = ctypeService.findAllById(); // взял список типов компет
         competaService.update(id, competa);
         return REDIRECT_COMPETA;
     }

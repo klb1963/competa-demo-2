@@ -31,26 +31,19 @@
     <!--    <form action="#" th:action="@{/competa/add}" method="post" th:object="${competa}"> // связали форму с объектом competa-->
     <form action="#" th:action="@{/competa/{id}/edit(id=${competa.id})}" th:object="${competa}" method="post">
 
-        <div class="form-check form-check-inline">
-            <input th:field="*{competaType}" th:checked="${competa.competaType} == 'Education'" class="form-check-input"
-                   type="radio" name="competaType" id="inlineRadio1" value="Education">
-            <label class="form-check-label" for="inlineRadio1">Education</label>
+        <!-- поле выбора типа из выпадающего списка -->
+<!--        <select class="form-control" th:field="*{ctypeId}" id="dropDownListCType">-->
+<!--            <option value="0"> select type </option>-->
+<!--            <option th:each="el:${ctypes}" th:value="${el.id}" th:text="${el.name}" ></option>-->
+<!--        </select>-->
+<!--        <br><br>-->
+
+        <!-- поле выбора типа с помощью радио-кнопки -->
+        <div class="form-check form-check-inline" th:each="el:${ctypes}" >
+            <input class="form-check-input" th:value="${el.id}" th:field="*{ctypeId}" th:text="${el.name}" th:checked="${competa.getCtypeName()} == ${el.name}" type="radio" name="${el.name}" id="${el.id}">
         </div>
-        <div class="form-check form-check-inline">
-            <input th:field="*{competaType}" th:checked="${competa.competaType} == 'Job'" type="radio"
-                   name="competaType" id="inlineRadio2" value="Job">
-            <label class="form-check-label" for="inlineRadio2">Job</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input th:field="*{competaType}" th:checked="${competa.competaType} == 'Hard skill'"
-                   class="form-check-input" type="radio" name="competaType" id="inlineRadio3" value="Hard skill">
-            <label class="form-check-label" for="inlineRadio3">Hard skill</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input th:field="*{competaType}" th:checked="${competa.competaType} == 'Soft skill'"
-                   class="form-check-input" type="radio" name="competaType" id="inlineRadio4" value="Soft skill">
-            <label class="form-check-label" for="inlineRadio3">Soft skill</label>
-        </div>
+
+
         <br><br>
         <input type="text" th:value="${competa.title}" th:field="*{title}" name="title" placeholder="Input title"
                class="form-control"><br>
@@ -60,6 +53,7 @@
                id="dateOutAdd" placeholder="Date of completion"><br>
 
         <!-- поле выбора индустрии из выпадающего списка -->
+<!--        th:unless ="${competa.ctypeName == 'Art' || competa.ctypeName == 'Sport'}" - так можно скрыть это поле по условию-->
         <select class="form-control" th:field="*{selectedIndustryId}" id="dropDownList">
             <option value="0"> select industry </option>
             <option th:each="el:${industries}" th:value="${el.id}" th:text="${el.name}" ></option>
