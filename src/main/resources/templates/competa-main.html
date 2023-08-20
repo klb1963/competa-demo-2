@@ -29,7 +29,7 @@
         <p th:text="${el.description}"/>
         <br><br>
         <p><b>Date of completion:</b> <span th:text="${#dates.format(el.dateOut, 'dd-MM-yyyy')}"/></p>
-        <p><b>Status:</b> <span th:text="${el.status}"/></p>
+        <p><b>Is public:</b> <span th:text="${el.status}"/></p>
         <a th:href="'/competa/' + ${el.id}" class="btn btn-primary"> Details </a>
     </div>
 </div>

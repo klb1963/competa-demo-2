@@ -25,7 +25,7 @@
 
         <!-- поле выбора типа с помощью радио-кнопки -->
         <div class="form-check form-check-inline" th:each="el:${ctypes}" >
-            <input class="form-check-input" th:value="${el.id}" th:field="*{ctypeId}" th:text="${el.name}" th:checked="${competa.getCtypeName()} == ${el.name}" type="radio" name="${el.name}" id="${el.id}" required>
+            <input type="radio" class="form-check-input" th:value="${el.id}" th:field="*{ctypeId}" th:text="${el.name}" th:checked="${competa.getCtypeName()} == ${el.name}" name="${el.name}" id="${el.id}" required>
         </div>
         <br><br>
         <!--   поле выбора title  -->
@@ -55,7 +55,6 @@
                 Public
             </label>
         </div>
-
         <br> <br>
         <button type="submit" class="btn btn-primary"> Add</button>
         <a th:href="@{/competa}" class="btn btn-secondary"> Back </a>
