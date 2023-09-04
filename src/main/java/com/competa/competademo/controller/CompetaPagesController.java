@@ -3,13 +3,18 @@ package com.competa.competademo.controller;
 import com.competa.competademo.dto.CompetaDto;
 import com.competa.competademo.dto.CtypeDto;
 import com.competa.competademo.dto.IndustryDto;
+import com.competa.competademo.entity.ImageInfo;
 import com.competa.competademo.service.CompetaService;
 import com.competa.competademo.service.CtypeService;
+import com.competa.competademo.service.FilesStorageService;
 import com.competa.competademo.service.IndustryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +29,9 @@ public class CompetaPagesController {
     private final IndustryService industryService; // добавил сервис связи с БД
 
     private final CtypeService ctypeService; // добавил сервис связи с БД
+
+    @Autowired
+    FilesStorageService storageService; // добавил сохранение изображений
 
 
     public CompetaPagesController(CompetaService<CompetaDto> competaService, IndustryService industryService, CtypeService ctypeService) {
@@ -60,13 +68,41 @@ public class CompetaPagesController {
 
     @GetMapping("/competa/{id}")  // переход на страницу
     public String competaDetails(@PathVariable(value = "id") long id, Model model) {
+        long competaId = id;
+//        final User authUser = userService.getAuthUser();
+//        String avatarData = userService.getAvatar(authUser);
         final Optional<CompetaDto> competa = competaService.findById(id);
+        // объект competa сейчас имеет тип Optional<CompetaDto>
+        // его надо трансформировать в тип Competa, чтобы передать в getCompetaImage
         if (competa.isPresent()) {
-            model.addAttribute(COMPETA_VIEW_VARIABLE, competa.get());
+            CompetaDto competaDto = competa.get();
+            model.addAttribute(COMPETA_VIEW_VARIABLE, competaDto);
+            //TODO - вернуть картинку по умолчанию, если ее нет
+            if (competaDto.getCompetaImage() != null) {
+                model.addAttribute("image", storageService.getBase64Image(Path.of(competaDto.getCompetaImage().getUrl())));
+            }
             return "competa-details";
         } else {
             return REDIRECT_COMPETA;
         }
+    }
+
+    @PostMapping("/competa/{id}")
+    public String uploadCompetaImage(@PathVariable(value = "id") long id, Model model, @RequestParam("file") MultipartFile file) {
+        String message = "";
+        try {
+            // сохранение файла изображения компеты
+            ImageInfo competaImage = storageService.save(file);
+            // TODO
+            long competaId = id; // параметр id взят из url c помощью @Pathvariable
+            competaService.addCompetaImage(competaId, competaImage); // метод реализован
+            message = "Uploaded the image successfully: " + file.getOriginalFilename();
+            model.addAttribute("message", message);
+        } catch (Exception e) {
+            message = "Could not upload the image: " + file.getOriginalFilename() + ". Error: " + e.getMessage();
+            model.addAttribute("message", message);
+        }
+        return "redirect:/competa/{id}";
     }
 
     @GetMapping("/competa/{id}/edit")
@@ -86,8 +122,8 @@ public class CompetaPagesController {
 
     @PostMapping("/competa/{id}/edit") //
     public String competaUpdate(@PathVariable(value = "id") long id, @ModelAttribute CompetaDto competa) {
-        final List<IndustryDto> industryDtoList = industryService.findAllById(); // взял список индустрий
-        final List<CtypeDto> ctypeDtoList = ctypeService.findAllById(); // взял список типов компет
+//        final List<IndustryDto> industryDtoList = industryService.findAllById(); // взял список индустрий
+//        final List<CtypeDto> ctypeDtoList = ctypeService.findAllById(); // взял список типов компет
         competaService.update(id, competa);
         return REDIRECT_COMPETA;
     }

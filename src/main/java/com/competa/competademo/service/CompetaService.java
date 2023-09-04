@@ -1,5 +1,9 @@
 package com.competa.competademo.service;
 
+import com.competa.competademo.entity.Competa;
+import com.competa.competademo.entity.ImageInfo;
+import com.competa.competademo.entity.User;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -22,4 +26,9 @@ public interface CompetaService<R> {
     List<R> findAllByAuthUser();
 
     int countByAuthUser();
+
+    // методы для competa image
+    void addCompetaImage(long competaId, ImageInfo competaImage);
+
+    String getCompetaImage(Competa competa);
 }

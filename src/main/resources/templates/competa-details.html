@@ -31,22 +31,31 @@
         <h2 th:text="${el.description}"/><br><br>
         <p><b>Date of creation:</b> <span th:text="${#dates.format(el.dateOut, 'dd-MM-yyyy')}"/></p>
         <p><b>Views:</b> <span th:text="${el.views}"/></p>
-        <p><b>Status public:</b> <span th:text="${el.status}"/></p>
+        <p><b>Is public:</b> <span th:text="${el.status}"/></p>
         <br> <br>
 
-<!--        Picture upload form-->
-<!--        <form-->
-<!--                id="uploadForm"-->
-<!--                method="post"-->
-<!--                th:action="@{/competa}"-->
-<!--                enctype="multipart/form-data">-->
-<!--            <input id="input-file" type="file" name="file" accept="image/png, image/jpeg" />-->
-<!--            <button class="btn btn-sm btn-outline-success float-right" type="submit">-->
-<!--                Upload-->
-<!--            </button>-->
-<!--        </form>-->
-<!--        <br> <br>-->
-
+        <h4 class="mb-3"> Competa Image </h4>
+        <style>
+            .round {
+                border-radius: 10px; /* Радиус скругления */
+            }
+        </style>
+        <img th:src="'data:image/png;base64,' + ${image}" width = "200" class = "round">
+        <br>
+        <br>
+        <!--        Picture upload form-->
+        <form
+                id="uploadForm"
+                method="post"
+                th:action="@{'/competa/' + ${el.id}}"
+                enctype="multipart/form-data">
+            <input id="input-file" type="file" name="file" accept="image/png, image/jpeg" />
+            <button class="btn btn-sm btn-outline-success float-right" type="submit">
+                Upload
+            </button>
+        </form>
+        <!--        Picture upload form-->
+        <br> <br>
         <a th:href="'/competa/' + ${el.id} + '/edit'" class="btn btn-warning"> Edit </a> <br><br>
         <form th:action="'/competa/' + ${el.id} + '/remove'" method="post">
             <button class="btn btn-warning" type="submit"> Delete</button>

@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -26,12 +27,36 @@ public class User {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false, unique = true)
-    private String email;
-
     @Column(nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+
+//    @Column(nullable = false)
+//    private String lastName;
+
+    @Column(nullable = false, unique = true)
+    private String email;
+
+//    @Column(nullable = false, unique = true)
+//    private String phone;
+
+//    @Column
+//    private LocalDate dateOfBirth;
+
+//    @Column
+//    private String profession; // occupation
+
+//    @Column
+//    private String level; // from beginner to expert
+
+//    @Column
+//    private String jobTitle; // роль, должность
+
+//    @Column
+//    boolean profileStatus; // public or confidential
+
+//    @Column
+//    private String residence;
 
     @ManyToOne
     @JoinColumn(name = "avatar_id")

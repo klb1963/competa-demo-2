@@ -30,6 +30,4 @@ public interface UserService {
     User getAuthUser();
 
     void addAvatar(ImageInfo avatar);
-
-    String getAvatar(User user);
 }

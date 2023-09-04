@@ -11,9 +11,10 @@ import java.util.Objects;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "ctype")
+@Table(name = "level")
 
-public class Ctype implements Comparable<Ctype> {
+public class Level implements Comparable<Level>{
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -27,8 +28,8 @@ public class Ctype implements Comparable<Ctype> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Ctype ctype = (Ctype) o;
-        return Objects.equals(id, ctype.id);
+        Level level = (Level) o;
+        return Objects.equals(id, level.id);
     }
 
     @Override
@@ -37,7 +38,7 @@ public class Ctype implements Comparable<Ctype> {
     }
 
     @Override
-    public int compareTo(Ctype o) {
+    public int compareTo(Level o) {
         return (int) (this.id - o.id);
     }
 }

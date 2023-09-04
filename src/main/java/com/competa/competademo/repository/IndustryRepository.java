@@ -12,6 +12,6 @@ import java.util.Optional;
 public interface IndustryRepository extends JpaRepository<Industry, Long> {
     Optional<Industry> findByName(String name);
 
-    // @Query("select c from Industry с where c.name = ?1")
-    List<Industry> findAllById(Industry industry);
+    @Query("select с from Industry с order by с.name")
+    List<Industry> findAll(Industry industry);
 }

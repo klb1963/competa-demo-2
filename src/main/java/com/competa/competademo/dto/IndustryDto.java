@@ -14,7 +14,7 @@ import static com.competa.competademo.dto.UserDtoHelper.parseUserName;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class IndustryDto {
+public class IndustryDto implements Comparable<Industry>{
     private Long id;
     @NotEmpty
     private String name;
@@ -31,4 +31,8 @@ public class IndustryDto {
                 .build();
     }
 
+    @Override
+    public int compareTo(Industry o) {
+        return this.name.compareTo(o.getName());
+    }
 }

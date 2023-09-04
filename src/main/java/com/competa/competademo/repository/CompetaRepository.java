@@ -14,4 +14,5 @@ public interface CompetaRepository extends CrudRepository<Competa, Long> {
 
     @Query("select с from Competa с where с.user = ?1")
     List<Competa> findAllByUser(User user);
+
 }

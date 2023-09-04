@@ -3,10 +3,7 @@ package com.competa.competademo.service.impl;
 import com.competa.competademo.dto.CompetaDto;
 import com.competa.competademo.dto.CtypeDto;
 import com.competa.competademo.dto.IndustryDto;
-import com.competa.competademo.entity.Competa;
-import com.competa.competademo.entity.Ctype;
-import com.competa.competademo.entity.Industry;
-import com.competa.competademo.entity.User;
+import com.competa.competademo.entity.*;
 import com.competa.competademo.exceptions.CompetaNotFoundException;
 import com.competa.competademo.repository.CompetaRepository;
 import com.competa.competademo.service.CompetaService;
@@ -14,8 +11,13 @@ import com.competa.competademo.service.CtypeService;
 import com.competa.competademo.service.IndustryService;
 import com.competa.competademo.service.UserService;
 import jakarta.transaction.Transactional;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Base64Utils;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 
@@ -107,6 +109,32 @@ public class CompetaServiceImpl implements CompetaService<CompetaDto> {
     public int countByAuthUser() {
         final User authUser = userService.getAuthUser();
         return (int) competaRepository.countByUser(authUser);
+    }
+
+    @Override
+    public void addCompetaImage(long competaId, ImageInfo competaImage) {
+//        взять текущую Competa - как это сделать?
+//        Обратись в сервис компеты, что бы найти компету по известному id
+        Competa competa = findCompeta(competaId);
+//        установить в ней значение setCompetaImage(competaImage);
+        competa.setCompetaImage(competaImage);
+//        сохранить в репозитории competaRepository(competa);
+        competaRepository.save(competa);
+    }
+
+    @Override
+    public String getCompetaImage(Competa competa) {
+        final var filePath = Path.of(competa.getCompetaImage().getUrl());
+        try {
+            final UrlResource resource = new UrlResource(filePath.toUri());
+            if (resource.exists() && resource.isReadable()) {
+                byte[] imageBytes = Files.readAllBytes(filePath);
+                return Base64Utils.encodeToString(imageBytes);
+            }
+        } catch (final IOException e) {
+            throw new RuntimeException("Error reading the avatar");
+        }
+        return "";
     }
 
     private Competa findCompeta(long competaId) {

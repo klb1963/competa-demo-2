@@ -1,8 +1,8 @@
 package com.competa.competademo.controller;
 
 import com.competa.competademo.dto.CtypeDto;
-import com.competa.competademo.dto.IndustryDto;
 import com.competa.competademo.service.CtypeService;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,24 +10,23 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
-public class CtypeController {
+public class CtypePagesController {
     private static final String CTYPE = "ctype";
     private static final String CTYPE_VIEW_VARIABLE = "ctype";
     private static final String REDIRECT_CTYPE = "redirect:/ctype";
     private final CtypeService ctypeService;
 
-    public CtypeController(CtypeService ctypeService) {
+    public CtypePagesController(CtypeService ctypeService) {
         this.ctypeService = ctypeService;
     }
 
     @GetMapping("/ctype")
     public String ctypeMain(org.springframework.ui.Model model) {
         final List<CtypeDto> ctypeDtoList = ctypeService.findAllById();
-        model.addAttribute("ctypeList", ctypeDtoList);
+        model.addAttribute("ctypes", ctypeDtoList);
         return "ctype-main"; // вызывается шаблон
     }
 
@@ -38,7 +37,7 @@ public class CtypeController {
     }
 
     @PostMapping("/ctype/add")
-    public String competaAdd(@ModelAttribute CtypeDto ctype, Model model) {
+    public String ctypeAdd(@ModelAttribute CtypeDto ctype, Model model) {
         model.addAttribute(CTYPE, new CtypeDto());
         ctypeService.saveCtype(ctype);
         return REDIRECT_CTYPE; // переход на страницу redirect:/industry

@@ -23,7 +23,7 @@ public class UserDto {
     @Email
     protected String email;
 
-    protected String avatar;
+    protected String avatar; // ссылка на аватар
 
     public UserDto(final User user) {
         this.id = user.getId();
@@ -33,6 +33,7 @@ public class UserDto {
         this.lastName = userNameModel.lastName();
     }
 
+    // конструктор
     public UserDto(User authUser, String avatarData) {
         this(authUser);
         this.avatar = avatarData;

@@ -64,6 +64,7 @@ public class ImageController {
 //        return ResponseEntity.ok()
 //                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
 //    }
+
 //    @GetMapping("/images/delete/{filename:.+}")
 //    public String deleteImage(@PathVariable String filename, Model model, RedirectAttributes redirectAttributes) {
 //        try {

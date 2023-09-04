@@ -29,7 +29,11 @@ public class Competa {
 
     private String description;
 
-    private boolean status;
+    private boolean status; // is private
+
+    private boolean isConfirmed; // статус подтверждения
+
+    private int trustIndex; // индекс доверия
 
     @ManyToOne
     private Industry industry; // индустрия
@@ -41,6 +45,11 @@ public class Competa {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private String timeOut;
+
+    // competa image
+    @ManyToOne
+    @JoinColumn(name = "competaImage_id")
+    private ImageInfo competaImage;
 
     @ManyToOne
     private User user;
@@ -68,11 +77,18 @@ public class Competa {
         sb.append(", description='").append(description).append('\'');
         sb.append(", industry='").append(industry).append('\'');
         sb.append(", status=").append(status);
+        // TODO
+        // добавить статус подтверждения
+        // добавить индекс доверия
         sb.append(", views=").append(views);
         sb.append(", dateOut=").append(dateOut);
         sb.append(", timeOut='").append(timeOut).append('\'');
         sb.append(", userId=").append(user.getId());
         sb.append('}');
         return sb.toString();
+    }
+
+    public void setCompetaImage(ImageInfo competaImage) {
+        this.competaImage = competaImage;
     }
 }

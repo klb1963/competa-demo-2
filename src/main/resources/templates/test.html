@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Form Fields</title>
+</head>
+<body>
+<form id="dynamic-form">
+  <input type="radio" name="field-type" value="text" checked> Text Field
+  <input type="radio" name="field-type" value="checkbox"> Checkbox
+  <input type="radio" name="field-type" value="select"> Select
+</form>
+<div id="dynamic-fields"></div>
+
+<script>
+  const dynamicForm = document.getElementById('dynamic-form');
+  const dynamicFieldsContainer = document.getElementById('dynamic-fields');
+
+  dynamicForm.addEventListener('change', function(event) {
+    const selectedFieldType = event.target.value;
+
+    // Clear the existing dynamic fields
+    dynamicFieldsContainer.innerHTML = '';
+
+    if (selectedFieldType === 'text') {
+      const textField = document.createElement('input');
+      textField.type = 'text';
+      textField.name = 'dynamic-text-field';
+      textField.placeholder = 'Enter text';
+      dynamicFieldsContainer.appendChild(textField);
+    } else if (selectedFieldType === 'checkbox') {
+      const checkboxField = document.createElement('input');
+      checkboxField.type = 'checkbox';
+      checkboxField.name = 'dynamic-checkbox';
+      checkboxField.id = 'dynamic-checkbox';
+
+      const label = document.createElement('label');
+      label.textContent = 'Check this box';
+      label.setAttribute('for', 'dynamic-checkbox');
+
+      dynamicFieldsContainer.appendChild(checkboxField);
+      dynamicFieldsContainer.appendChild(label);
+    } else if (selectedFieldType === 'select') {
+      const selectField = document.createElement('select');
+      selectField.name = 'dynamic-select';
+
+      const option1 = new Option('Option 1', 'option1');
+      const option2 = new Option('Option 2', 'option2');
+      const option3 = new Option('Option 3', 'option3');
+
+      selectField.appendChild(option1);
+      selectField.appendChild(option2);
+      selectField.appendChild(option3);
+
+      dynamicFieldsContainer.appendChild(selectField);
+    }
+  });
+</script>
+</body>
+</html>

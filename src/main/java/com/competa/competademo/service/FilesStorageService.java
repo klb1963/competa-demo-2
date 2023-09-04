@@ -19,4 +19,6 @@ public interface FilesStorageService {
     public void deleteAll();
 
     public Stream<Path> loadAll();
+
+    String getBase64Image(Path path);
 }

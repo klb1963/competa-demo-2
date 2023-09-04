@@ -32,7 +32,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
     private final RoleService roleService;
 
     public UserServiceImpl(UserRepository userRepository,
@@ -128,19 +127,5 @@ public class UserServiceImpl implements UserService {
        User user = getAuthUser();
        user.setProfileAvatar(avatar);
        userRepository.save(user);
-    }
-
-   public String getAvatar(User user){
-       final var filePath = Path.of(user.getProfileAvatar().getUrl());
-       try {
-           final UrlResource resource = new UrlResource(filePath.toUri());
-           if (resource.exists() && resource.isReadable()) {
-            byte[] imageBytes = Files.readAllBytes(filePath);
-            return Base64Utils.encodeToString(imageBytes);
-       }
-       } catch (final IOException e) {
-           throw new RuntimeException("Error reading the avatar");
-       }
-           return "";
     }
 }

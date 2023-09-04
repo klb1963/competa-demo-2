@@ -1,18 +1,18 @@
 package com.competa.competademo.repository;
 
 import com.competa.competademo.entity.Ctype;
-import com.competa.competademo.entity.Industry;
+import com.competa.competademo.entity.Level;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface CtypeRepository extends JpaRepository<Ctype, Long> {
+public interface LevelRepository extends JpaRepository<Level, Long> {
 
-    Optional<Ctype> findByName(String name);
+    Optional<Level> findByName(String name);
 
-    @Query("select с from Ctype с order by с.id")
-    List<Ctype> findAll();
+    @Query("select с from Level с order by с.id")
+    List<Level> findAll();
 
 }

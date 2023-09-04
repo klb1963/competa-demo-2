@@ -1,8 +1,6 @@
 package com.competa.competademo.dto;
 
-import com.competa.competademo.entity.Competa;
-import com.competa.competademo.entity.Ctype;
-import com.competa.competademo.entity.Industry;
+import com.competa.competademo.entity.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -28,12 +26,17 @@ public class CompetaDto {
     @Getter
     private String description;
 
-    private boolean status;
+    private boolean status; // публичная или приватная
+
+    // TODO - добавить статус подтверждения и индекс доверия
+
     private int views;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateOut;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private String timeOut;
+
+    private ImageInfo competaImage; // ссылка на изображение
 
     // конвертация из Dto в Entity
     // конструктор
@@ -48,7 +51,15 @@ public class CompetaDto {
         this.views = competa.getViews();
         this.dateOut = competa.getDateOut();
         this.timeOut = competa.getTimeOut();
+        this.competaImage = competa.getCompetaImage(); // добавил competaImage
     }
+
+    // конструктор для competaImage
+    public CompetaDto(Competa competa, ImageInfo competaImage) {
+        this(competa);
+        this.competaImage = competaImage;
+    }
+
 
     public com.competa.competademo.entity.Competa toEntity(Industry industry, Ctype ctype) {
         return com.competa.competademo.entity.Competa.builder()
@@ -61,6 +72,7 @@ public class CompetaDto {
                 .views(this.views)
                 .dateOut(this.dateOut)
                 .timeOut(this.timeOut)
+                .competaImage(competaImage) // добавил competaImage
                 .build();
     }
 }
